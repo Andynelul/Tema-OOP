@@ -39,10 +39,14 @@ public class PlayerDeck {
 
     @Override
     public String toString() {
-        return "PlayerDeck{" +
-                "command='" + command + '\'' +
-                ", PlayerIdx=" + PlayerIdx +
-                ", output=" + output +
-                '}';
+        return "PlayerDeck{"
+                + "command='"
+                + command
+                + '\''
+                + ", PlayerIdx="
+                + PlayerIdx
+                + ", output="
+                + output
+                + '}';
     }
 }

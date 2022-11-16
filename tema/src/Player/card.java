@@ -23,13 +23,9 @@ public class card {
         this.mana = mana;
     }
 
-    //public int getAttackDamage() {return attackDamage;}
-
-     public void setAttackDamage(final int attackDamage) {this.attackDamage = attackDamage;}
-
-   //public int getHealth() {
-      //  return health;
-   // }
+     public void setAttackDamage(final int attackDamage) {
+        this.attackDamage = attackDamage;
+    }
 
     public void setHealth(final int health) {
         this.health = health;

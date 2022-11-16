@@ -14,6 +14,7 @@ public final class ActionsInput {
     }
 
     public String getCommand() {
+
         return command;
     }
 

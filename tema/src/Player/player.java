@@ -1,9 +1,6 @@
         package Player;
 
-        import com.fasterxml.jackson.databind.ObjectMapper;
-        import com.fasterxml.jackson.databind.node.ArrayNode;
         import fileio.CardInput;
-        import fileio.DecksInput;
 
         import java.util.ArrayList;
 
@@ -14,6 +11,8 @@
     private ArrayList<card> deck= new ArrayList<>();
     private ArrayList<card> hand=new ArrayList<>();
     private cardChampion Champion;
+
+    int mana;
 
             public int getPlayerIdx() {
                 return playerIdx;
@@ -30,41 +29,6 @@
             public void setNrCardsInDeck(int nrCardsInDeck) {
                 this.nrCardsInDeck = nrCardsInDeck;
             }
-
-
-
-
-//                public player(int playerIdx, int nrCardsInDeck, int nrDecks,ArrayList<ArrayList<CardInput>> decks) {
-//                this.playerIdx = playerIdx;
-//                this.nrCardsInDeck = nrCardsInDeck;
-//                this.nrDecks = nrDecks;
-
-//                for(int i=0; i<nrDecks; i++)
-//                { ArrayList<card > this.decks.set(i,new ArrayList<card>());
-//                    for(int j=0; j<nrCardsInDeck; j++)
-//                    {   CardInput carte=decks.get(i).get(j);
-//                         this.decks.get(i).set(j,new card(carte.getMana(),carte.getAttackDamage(),carte.getHealth(), carte.getDescription(), carte.getColors(), carte.getName()));
-//                    }
-//                }
-
-
-
-//            public player(int playerIdx, int nrCardsInDeck, int nrDecks, ArrayList<ArrayList<card>> decks) {
-//                this.playerIdx = playerIdx;
-//                this.nrCardsInDeck = nrCardsInDeck;
-//                this.nrDecks = nrDecks;
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                ArrayNode output = objectMapper.createArrayNode();
-//                output.add(objectMapper.valueToTree(decks));
-//                this.decks=output.decks;
-//                this.decks = decks;
-//            }
-//            public player(int playerIdx, int nrCardsInDeck, int nrDecks) {
-//               this.playerIdx = playerIdx;
-//              this.nrCardsInDeck = nrCardsInDeck;
-//               this.nrDecks = nrDecks;}
-//
-
 
             public player(int playerIdx, int nrCardsInDeck, ArrayList<CardInput> decks) {
                 this.playerIdx = playerIdx;
@@ -108,5 +72,13 @@
 
             public void setChampion(CardInput champion) {
                 Champion = new cardChampion(champion);
+            }
+
+            public int getMana() {
+                return mana;
+            }
+
+            public void setMana(int mana) {
+                this.mana = mana;
             }
         }

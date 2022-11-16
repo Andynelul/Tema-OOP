@@ -1,24 +1,18 @@
 package main;
 
 import GwentStone.gwentStone;
-import Player.PlayerDeck;
-import Player.decks;
-import Player.player;
 import checker.Checker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import checker.CheckerConstants;
-import fileio.ActionsInput;
 import fileio.Input;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -69,7 +63,8 @@ public final class Main {
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Input inputData = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH + filePath1),
+        Input inputData = objectMapper.readValue(new File(
+                CheckerConstants.TESTS_PATH + filePath1),
                 Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
@@ -77,15 +72,7 @@ public final class Main {
         //TODO add here the entry point to your implementation
         gwentStone game = new gwentStone();
         output=game.start(inputData);
-        //player p=  game.start(inputData);
-//        ArrayList <ActionsInput> actions = inputData.getGames().get(0).getActions();
-//        for ( ActionsInput action : actions ) {
-//            String comand = action.getCommand();
-//            if ( comand.equals("getPlayerDeck") ) {
-//                int id = action.getPlayerIdx();
-//               PlayerDeck plr =new  PlayerDeck(comand, id, game.start(inputData).getDecks());
-//                    output.add(objectMapper.valueToTree(plr));
-                ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-                objectWriter.writeValue(new File(filePath2), output);
+        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(new File(filePath2), output);
             }
         }

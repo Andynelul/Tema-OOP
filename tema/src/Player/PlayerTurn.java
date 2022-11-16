@@ -1,9 +1,8 @@
 package Player;
 
-import java.util.ArrayList;
 
 public class PlayerTurn {
-    String command ;
+    String command;
     int output;
 
     public String getCommand() {

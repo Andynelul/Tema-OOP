@@ -7,11 +7,13 @@ public class cardMinion extends card{
     private int health;
 
     public int getAttackDamage() {
+
         return attackDamage;
     }
 
     @Override
     public void setAttackDamage(int attackDamage) {
+
         this.attackDamage = attackDamage;
     }
 
