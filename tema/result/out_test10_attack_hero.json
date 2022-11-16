@@ -1,0 +1,47 @@
+[ {
+  "command" : "getPlayerTurn",
+  "output" : 1
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 3,
+    "health" : 30,
+    "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
+    "colors" : [ "Red", "Black", "Purple" ],
+    "name" : "General Kocioraw"
+  },
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 3,
+    "health" : 30,
+    "description" : "Premium card: Glory to all we see, glory to all he is, glory to everyone who will try to escape him.",
+    "colors" : [ "Black", "Red", "Grey" ],
+    "name" : "Lord Royce"
+  },
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerTurn",
+  "output" : 1
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 3,
+    "health" : 30,
+    "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
+    "colors" : [ "Red", "Black", "Purple" ],
+    "name" : "General Kocioraw"
+  },
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 3,
+    "health" : 30,
+    "description" : "Premium card: Glory to all we see, glory to all he is, glory to everyone who will try to escape him.",
+    "colors" : [ "Black", "Red", "Grey" ],
+    "name" : "Lord Royce"
+  },
+  "playerIdx" : 2
+} ]

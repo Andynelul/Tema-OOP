@@ -1,0 +1,44 @@
+[ {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 2,
+    "health" : 30,
+    "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
+    "colors" : [ "Green", "Yellow" ],
+    "name" : "General Kocioraw"
+  },
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 3,
+    "health" : 30,
+    "description" : "Standard card: Exact precision is her mantra, emotion is for the weak.",
+    "colors" : [ "Black", "Red" ],
+    "name" : "Empress Thorina"
+  },
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerTurn",
+  "output" : 2
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 2,
+    "health" : 30,
+    "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
+    "colors" : [ "Green", "Yellow" ],
+    "name" : "General Kocioraw"
+  },
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerHero",
+  "output" : {
+    "mana" : 3,
+    "health" : 30,
+    "description" : "Standard card: Exact precision is her mantra, emotion is for the weak.",
+    "colors" : [ "Black", "Red" ],
+    "name" : "Empress Thorina"
+  },
+  "playerIdx" : 2
+} ]
