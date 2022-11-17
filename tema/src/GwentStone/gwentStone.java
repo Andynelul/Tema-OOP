@@ -2,6 +2,7 @@ package GwentStone;
 
 import Player.player;
 import Systems.ExecuteCommands;
+import Systems.Table;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.*;
@@ -15,7 +16,6 @@ public class gwentStone {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode out = objectMapper.createArrayNode();
         for ( int i = 0; i < inputdata.getGames().size(); i++ ) {
-
             GameInput game = inputdata.getGames().get(i);
             int p1deck = game.getStartGame().getPlayerOneDeckIdx();
             int p2deck = game.getStartGame().getPlayerTwoDeckIdx();
@@ -33,10 +33,18 @@ public class gwentStone {
             p1.getDeck().remove(0);
             p2.getHand().add(p2.getDeck().get(0));
             p2.getDeck().remove(0);
-            ExecuteCommands commands = new ExecuteCommands();
-            out = commands.GetCommands(game, p1, p2);
+            Table table=new Table();
+            p1.setMana(1);
+            p2.setMana(1);
+           // startplaying()
+          // while(game.getActions())
+          //  {
+          //  p1.setMana(p1.getMana()+round);
+           // p2.setMana(p2.getMana()+round);
+           ExecuteCommands commands = new ExecuteCommands();
+            out = commands.GetCommands(game, p1, p2,table);
+           // }
         }
             return out;
         }
-    }
-
+}

@@ -12,7 +12,7 @@
     private ArrayList<card> hand=new ArrayList<>();
     private cardChampion Champion;
 
-    int mana;
+    int mana=0;
 
             public int getPlayerIdx() {
                 return playerIdx;
