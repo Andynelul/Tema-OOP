@@ -6,15 +6,18 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.ActionsInput;
 import fileio.GameInput;
 
+import java.util.ArrayList;
+
 public class ExecuteCommands {
-    public ArrayNode GetCommands(GameInput game, player p1, player p2,Table table){
+    public void GetCommands(GameInput game, player p1, player p2,Table table,ArrayNode out){
         int playerTurn=game.getStartGame().getStartingPlayer();
         int counter=0;
         int round=1;
         int randul0=0,randul3=0;
         int randul1=0,randul2=0;
+        int p1ChampAt=0,p2ChampAt=0;
         ObjectMapper objectMapper=new ObjectMapper() ;
-        ArrayNode out=objectMapper.createArrayNode();
+       // ArrayNode out=objectMapper.createArrayNode();
         for( ActionsInput action: game.getActions()) {
             String command = action.getCommand();
             Commands doCommand = new Commands();
@@ -44,10 +47,12 @@ public class ExecuteCommands {
                     playerTurn = 2;
                     counter++;
                     table.tableUnfrozep1();
+                    p1ChampAt=0;
                 } else {
                     playerTurn = 1;
                     counter++;
                     table.tableUnfrozep2();
+                    p2ChampAt=0;
                 }
                  if ( counter == 2 ) {
                     counter = 0;
@@ -183,17 +188,18 @@ public class ExecuteCommands {
                                 if ( coorddDefX != 0 && coorddDefX != 1 ) {
                                     int cnt = 0;
                                     for ( int i = 0; i < table.getTable().get(2).size(); i++ ) {
-                                        if ( table.getTable().get(2).get(i) instanceof cardTable )
+                                        if ( table.getTable().get(2).get(i).getName().equals("Goliath")||table.getTable().get(2).get(i).getName().equals("Warden"))
                                             cnt++;
                                     }
                                     if ( cnt >= 1 ) {
-                                        if ( coorddDefX == 2 ) {
+                                        if ( table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Goliath")||table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Warden")) {
 
                                             cardTable attCard = table.getTable().get(coordX).get(coordY);
                                             cardTable defCard = table.getTable().get(coorddDefX).get(coordDefY);
                                             defCard.setHealth(defCard.getHealth() - attCard.getAttackDamage());
                                             if ( defCard.getHealth() <= 0 ) {
                                                 table.getTable().get(coorddDefX).remove(coorddDefX);
+                                                randul2--;
                                             }
                                             //    attCard.setFrozen(1);
                                             attCard.setAttacked(1);
@@ -206,6 +212,7 @@ public class ExecuteCommands {
                                         defCard.setHealth(defCard.getHealth() - attCard.getAttackDamage());
                                         if ( defCard.getHealth() <= 0 ) {
                                             table.getTable().get(coorddDefX).remove(coordDefY);
+                                            randul3--;
                                         }
                                         attCard.setAttacked(1);
                                     }
@@ -215,17 +222,18 @@ public class ExecuteCommands {
                                 if ( coorddDefX != 2 && coorddDefX != 3 ) {
                                     int cnt = 0;
                                     for ( int i = 0; i < table.getTable().get(1).size(); i++ ) {
-                                        if ( table.getTable().get(1).get(i) instanceof cardTable )
+                                        if ( table.getTable().get(1).get(i).getName().equals("Goliath")||table.getTable().get(1).get(i).getName().equals("Warden"))
                                             cnt++;
                                     }
                                     if ( cnt >= 1 ) {
-                                        if ( coorddDefX == 1 ) {
+                                        if ( table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Goliath")||table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Warden")) {
 
                                             cardTable attCard = (table.getTable().get(coordX).get(coordY));
                                             cardTable defCard = (table.getTable().get(coorddDefX).get(coordDefY));
                                             defCard.setHealth(defCard.getHealth() - attCard.getAttackDamage());
                                             if ( defCard.getHealth() <= 0 ) {
                                                 table.getTable().get(coorddDefX).remove(coordDefY);
+                                                randul1--;
                                             }
                                             attCard.setAttacked(1);
                                         } else
@@ -236,6 +244,7 @@ public class ExecuteCommands {
                                         defCard.setHealth(defCard.getHealth() - attCard.getAttackDamage());
                                         if ( defCard.getHealth() <= 0 ) {
                                             table.getTable().get(coorddDefX).remove(coordDefY);
+                                            randul0--;
                                         }
                                         attCard.setAttacked(1);
                                     }
@@ -381,8 +390,239 @@ public class ExecuteCommands {
             {
                 out.add(objectMapper.valueToTree(doCommand.getFrozenCardsOnTable(table)));
             }
-        }
-        return out;
+            if(command.equals("cardUsesAbility"))
+            {   int coordY, coordX, coordDefY, coorddDefX;
+                coordY = action.getCardAttacker().getY();
+                coordX =( 3 - action.getCardAttacker().getX());
+                coordDefY = action.getCardAttacked().getY();
+                coorddDefX = (3 - action.getCardAttacked().getX());
+                if(coordY<table.getTable().get(coordX).size()||coordDefY<table.getTable().get(coorddDefX).size()) {
+                    if (( table.getTable().get(coordX).get(coordY).getFrozen()) == 0 ) {
+                        if ( (table.getTable().get(coordX).get(coordY)).getAttacked() == 0 ) {
+                            minionAbility doAbility=new minionAbility();
+                            if ( playerTurn == 1 ) {
+                                cardTable chosencard = table.getTable().get(coordX).get(coordY);
+                                if ( chosencard.getName().equals("The Ripper") || chosencard.getName().equals("Miraj") || chosencard.getName().equals("The Cursed One") )
+                                {if (coorddDefX== 2 || coorddDefX == 3 )
+                                    {
+                                        int cnt = 0;
+                                        for ( int i = 0; i < table.getTable().get(2).size(); i++ ) {
+                                            if ( table.getTable().get(2).get(i).getName().equals("Goliath")||table.getTable().get(2).get(i).getName().equals("Warden"))
+                                                cnt++;
+                                        }
+                                        if ( cnt >= 1 ) {
+                                            if ( table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Goliath")||table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Warden")) {
+
+                                                cardTable attCard = table.getTable().get(coordX).get(coordY);
+                                                cardTable defCard = table.getTable().get(coorddDefX).get(coordDefY);
+                                                doAbility.ability(attCard, defCard);
+                                                if ( defCard.getHealth() <1 ) {
+                                                    table.getTable().get(coorddDefX).remove(coordDefY);
+                                                    randul2--;
+                                                }
+                                                attCard.setAttacked(1);
+                                            } else
+                                                out.add(objectMapper.valueToTree(doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(),"Attacked card is not of type 'Tank'.")));
+                                        }
+                                        else {
+                                            cardTable attCard = (table.getTable().get(coordX).get(coordY));
+                                            cardTable defCard = (table.getTable().get(coorddDefX).get(coordDefY));
+                                            doAbility.ability(attCard, defCard);
+                                            if ( defCard.getHealth() <1 ) {
+                                                table.getTable().get(coorddDefX).remove(coordDefY);
+                                                randul3--;
+                                            }
+                                            attCard.setAttacked(1);
+                                        }
+
+                                }else
+                                    out.add(objectMapper.valueToTree((doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(), "Attacked card does not belong to the enemy."))));
+                                }
+                                if(chosencard.getName().equals("Disciple"))
+                                {if (  coorddDefX == 0 || coorddDefX == 1 )
+                                {   cardTable attCard = table.getTable().get(coordX).get(coordY);
+                                    cardTable defCard = table.getTable().get(coorddDefX).get(coordDefY);
+
+                                    doAbility.ability(attCard,defCard);
+                                    attCard.setAttacked(1);
+                                }else
+                                    out.add(objectMapper.valueToTree((doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(), "Attacked card does not belong to the current player."))));
+                                }
+                                }
+                            else //player 2
+                            {
+                                {
+                                    cardTable chosencard = table.getTable().get(coordX).get(coordY);
+                                    if ( chosencard.getName().equals("The Ripper") || chosencard.getName().equals("Miraj") || chosencard.getName().equals("The Cursed One") )
+                                    {if ( coorddDefX == 1 || coorddDefX == 0 ) {
+                                        {
+                                            int cnt = 0;
+                                            for ( int i = 0; i < table.getTable().get(1).size(); i++ ) {
+                                                if ( table.getTable().get(1).get(i).getName().equals("Goliath")||table.getTable().get(1).get(i).getName().equals("Warden"))
+                                                    cnt++;
+                                            }
+                                            if ( cnt >= 1 ) {
+                                                if ( table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Goliath")||table.getTable().get(coorddDefX).get(coordDefY).getName().equals("Warden")) {
+
+                                                    cardTable attCard = table.getTable().get(coordX).get(coordY);
+                                                    cardTable defCard = table.getTable().get(coorddDefX).get(coordDefY);
+                                                    doAbility.ability(attCard, defCard);
+
+                                                    if ( defCard.getHealth() <1 ) {
+                                                        table.getTable().get(coorddDefX).remove(coorddDefX);
+                                                        randul1--;
+                                                    }
+
+                                                    attCard.setAttacked(1);
+                                                } else
+                                                    out.add(objectMapper.valueToTree(doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(),"Attacked card is not of type 'Tank'.")));
+                                            }
+                                            else {
+                                                cardTable attCard = (table.getTable().get(coordX).get(coordY));
+                                                cardTable defCard = (table.getTable().get(coorddDefX).get(coordDefY));
+                                                doAbility.ability(attCard, defCard);
+                                                if ( defCard.getHealth() < 1) {
+                                                    table.getTable().get(coorddDefX).remove(coorddDefX);
+                                                    randul0--;
+                                                }
+                                                attCard.setAttacked(1);
+                                            }
+                                        }
+                                    }else
+                                        out.add(objectMapper.valueToTree((doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(), "Attacked card does not belong to the enemy."))));
+                                    }
+                                    if(chosencard.getName().equals("Disciple"))
+                                    {if ( coorddDefX == 2 || coorddDefX == 3 )
+                                    {   cardTable attCard = table.getTable().get(coordX).get(coordY);
+                                        cardTable defCard = table.getTable().get(coorddDefX).get(coordDefY);
+
+                                        doAbility.ability(attCard,defCard);
+                                        attCard.setAttacked(1);
+                                    }else
+                                        out.add(objectMapper.valueToTree((doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(), "Attacked card does not belong to the current player."))));
+                                    }
+                                }
+                            }
+                        } else out.add(objectMapper.valueToTree((doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(), "Attacker card has already attacked this turn."))));
+
+                    } else out.add(objectMapper.valueToTree((doCommand.getAbilityErrors( action.getCardAttacker(), action.getCardAttacked(), "Attacker card is frozen."))));
+
+                }else  out.add(objectMapper.valueToTree((doCommand.getAbilityErrors(action.getCardAttacker(),action.getCardAttacked(), "Attacked card does not belong to the enemy."))));
+                        }
+            if(command.equals("useAttackHero"))
+            {   int coordY, coordX;
+                coordY = action.getCardAttacker().getY();
+                coordX =( 3 - action.getCardAttacker().getX());
+                if (( table.getTable().get(coordX).get(coordY).getFrozen()) == 0 ) {
+                    if ( (table.getTable().get(coordX).get(coordY)).getAttacked() == 0 ) {
+                cardTable chosen=table.getTable().get(3-action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
+                if(playerTurn==1)
+                { int cnt=0;
+                    for ( int i = 0; i < table.getTable().get(2).size(); i++ ) {
+                    if ( table.getTable().get(2).get(i).getName().equals("Goliath")||table.getTable().get(2).get(i).getName().equals("Warden"))
+                    cnt++;}
+                if(cnt>0)
+                    {out.add(objectMapper.valueToTree(doCommand.HeroAttackError( action.getCardAttacker(),"Attacked card is not of type 'Tank'.")));}
+                else {
+                    p2.getChampion().setHealth(p2.getChampion().getHealth() - chosen.getAttackDamage());
+                    chosen.setAttacked(1);
+                    if ( p2.getChampion().getHealth() < 1 ) {
+                        Statistics.setPlayerOneWins(Statistics.getPlayerOneWins()+1);
+                        out.add(objectMapper.valueToTree(doCommand.getEnd("Player one killed the enemy hero.")));
+                    }
+                }
+                }
+                else if(playerTurn==2)
+                {int cnt=0;
+                    for ( int i = 0; i < table.getTable().get(1).size(); i++ ) {
+                    if ( table.getTable().get(1).get(i).getName().equals("Goliath")||table.getTable().get(1).get(i).getName().equals("Warden"))
+                    cnt++;}
+                    if(cnt>0)
+                    {out.add(objectMapper.valueToTree(doCommand.HeroAttackError( action.getCardAttacker(),"Attacked card is not of type 'Tank'.")));}
+                    else {
+                        p1.getChampion().setHealth(p1.getChampion().getHealth() - chosen.getAttackDamage());
+                        chosen.setAttacked(1);
+                        if ( p1.getChampion().getHealth() < 1 ) {
+                            Statistics.setPlayerTwoWins(Statistics.getPlayerTwoWins()+1);
+                            out.add(objectMapper.valueToTree(doCommand.getEnd("Player two killed the enemy hero.")));
+                        }
+                    }
+                }
+                    } else out.add(objectMapper.valueToTree((doCommand.HeroAttackError(action.getCardAttacker(), "Attacker card has already attacked this turn."))));
+
+                } else out.add(objectMapper.valueToTree((doCommand.HeroAttackError( action.getCardAttacker(), "Attacker card is frozen."))));
+            }
+            if(command.equals("useHeroAbility"))
+            {  int Go=0;
+                heroAbilities ability=new heroAbilities();
+                ArrayList<cardTable> row=table.getTable().get(3-action.getAffectedRow());
+                int rowNr=(3- action.getAffectedRow());
+                if(playerTurn==1){
+                    if(p1.getMana()>=p1.getChampion().getMana()) {
+                        if ( p1ChampAt == 0 ){
+                            if(p1.getChampion().getName().equals("Lord Royce")||p1.getChampion().getName().equals("Empress Thorina"))
+                            {if(rowNr==2||rowNr==3)
+                                Go++;
+                            else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError( action.getAffectedRow(),"Selected row does not belong to the enemy.")));}
+                            if(p1.getChampion().getName().equals("General Kocioraw")||p1.getChampion().getName().equals("King Mudface")) {
+                                if ( rowNr == 1 || rowNr == 0 )
+                                    Go++;
+                                else
+                                    out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError( action.getAffectedRow(), "Selected row does not belong to the current player.")));
+                            }
+                            if(Go==1)
+                            {  ability.ability(p1.getChampion(), row);
+                        p1.setMana(p1.getMana() - p1.getChampion().getMana());
+                        p1ChampAt++;
+                        if ( (3 - action.getAffectedRow()) == 0 ) {
+                            randul0--;
+                        } else {
+                            randul1--;
+                        }
+                    }
+                        }else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError(action.getAffectedRow(),"Hero has already attacked this turn.")));
+                    }else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError(action.getAffectedRow(),"Not enough mana to use hero's ability.")));
+                }
+                else//p2
+                {
+                    if(p2.getMana()>=p2.getChampion().getMana()) {
+                    if ( p2ChampAt == 0 ){
+                        if(p2.getChampion().getName().equals("Lord Royce")||p2.getChampion().getName().equals("Empress Thorina"))
+                        if(rowNr==1||rowNr==0)
+                            Go++;
+                        else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError( action.getAffectedRow(),"Selected row does not belong to the enemy.")));
+                        if(p2.getChampion().getName().equals("General Kocioraw")||p2.getChampion().getName().equals("King Mudface"))
+                        if(rowNr==3||rowNr==2)
+                            Go++;
+                        else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError( action.getAffectedRow(),"Selected row does not belong to the current player.")));
+                        if(Go==1) {
+                            ability.ability(p2.getChampion(), row);
+                            p2.setMana(p2.getMana() - p2.getChampion().getMana());
+                            p2ChampAt++;
+                            if ( (3 - action.getAffectedRow()) == 2 ) {
+                                randul2--;
+                            } else {
+                                randul3--;
+                            }
+                        } }else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError(action.getAffectedRow(),"Hero has already attacked this turn.")));
+                }else out.add(objectMapper.valueToTree(doCommand.getchampionAbilityError( action.getAffectedRow(),"Not enough mana to use hero's ability.")));
+                }
+            }
+            if(command.equals("getPlayerOneWins"))
+            {
+                out.add(objectMapper.valueToTree(doCommand.GetPlayerOneWins(Statistics.getPlayerOneWins())));
+            }
+            if(command.equals("getPlayerTwoWins"))
+            {
+                out.add(objectMapper.valueToTree(doCommand.GetPlayerTwoWins(Statistics.getPlayerTwoWins())));
+            }
+            if(command.equals("getTotalGamesPlayed"))
+            {
+                out.add(objectMapper.valueToTree(doCommand.GetGames(Statistics.getGames())));
+            }
+            }
+
+        //return out;
     }
 }
 

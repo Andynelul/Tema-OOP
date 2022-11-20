@@ -3,7 +3,7 @@ package Player;
 import fileio.CardInput;
 
 public class cardChampion extends card{
-    private final int health=30;
+    private  int health=30;
     public cardChampion(CardInput card) {
 
         super(card);
@@ -12,5 +12,10 @@ public class cardChampion extends card{
     public int getHealth() {
 
         return health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

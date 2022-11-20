@@ -2,7 +2,6 @@ package Systems;
 
 import Player.*;
 import fileio.Coordinates;
-
 import java.util.ArrayList;
 
 public class Commands {
@@ -92,6 +91,41 @@ public class Commands {
     public AttackError getAttackErrors(Coordinates Att,Coordinates Def,String error)
     {
         AttackError plr=new AttackError("cardUsesAttack",Att,Def,error);
+        return plr;
+    }
+    public AttackError getAbilityErrors(Coordinates Att,Coordinates Def,String error)
+    {
+        AttackError plr=new AttackError("cardUsesAbility",Att,Def,error);
+        return plr;
+    }
+    public GameEnd getEnd(String string)
+    {
+        GameEnd plr=new GameEnd(string);
+        return plr;
+    }
+    public AttackHeroError HeroAttackError(Coordinates att,String error)
+    {
+        AttackHeroError plr= new AttackHeroError("useAttackHero", att, error);
+                return plr;
+    }
+    public championAbilityError getchampionAbilityError(int affectedRow,String error)
+    {
+        championAbilityError plr=new championAbilityError("useHeroAbility",affectedRow,error);
+        return plr;
+    }
+    public PlayerTurn GetGames(int games)
+    {
+        PlayerTurn plr=new PlayerTurn("getTotalGamesPlayed",games);
+        return plr;
+    }
+    public PlayerTurn GetPlayerOneWins(int games)
+    {
+        PlayerTurn plr=new PlayerTurn("getPlayerOneWins",games);
+        return plr;
+    }
+    public PlayerTurn GetPlayerTwoWins(int games)
+    {
+        PlayerTurn plr=new PlayerTurn("getPlayerTwoWins",games);
         return plr;
     }
 }

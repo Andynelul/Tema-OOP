@@ -2,11 +2,11 @@ package GwentStone;
 
 import Player.player;
 import Systems.ExecuteCommands;
+import Systems.Statistics;
 import Systems.Table;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.*;
-
 import java.util.ArrayList;
 import java.util.Random;
 import static java.util.Collections.shuffle;
@@ -14,8 +14,9 @@ import static java.util.Collections.shuffle;
 public class gwentStone {
     public ArrayNode start(Input inputdata) {
         ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode out = objectMapper.createArrayNode();
+        ArrayNode out = objectMapper.createArrayNode();;
         for ( int i = 0; i < inputdata.getGames().size(); i++ ) {
+            Statistics.setGames(Statistics.getGames()+1);
             GameInput game = inputdata.getGames().get(i);
             int p1deck = game.getStartGame().getPlayerOneDeckIdx();
             int p2deck = game.getStartGame().getPlayerTwoDeckIdx();
@@ -36,14 +37,8 @@ public class gwentStone {
             Table table=new Table();
             p1.setMana(1);
             p2.setMana(1);
-           // startplaying()
-          // while(game.getActions())
-          //  {
-          //  p1.setMana(p1.getMana()+round);
-           // p2.setMana(p2.getMana()+round);
            ExecuteCommands commands = new ExecuteCommands();
-            out = commands.GetCommands(game, p1, p2,table);
-           // }
+           commands.GetCommands(game, p1, p2,table,out);
         }
             return out;
         }
