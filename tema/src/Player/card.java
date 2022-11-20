@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class card {
     private int mana;
-    private int attackDamage;
     private int health;
     private String description;
     private ArrayList<String> colors;
@@ -23,9 +22,6 @@ public class card {
         this.mana = mana;
     }
 
-     public void setAttackDamage(final int attackDamage) {
-        this.attackDamage = attackDamage;
-    }
 
     public void setHealth(final int health) {
         this.health = health;
@@ -60,8 +56,6 @@ public class card {
         return "{"
                 +  "mana="
                 + mana
-                +  ", attackDamage="
-                + attackDamage
                 + ", health="
                 + health
                 +  ", description='"
@@ -77,6 +71,12 @@ public class card {
     }
 
     public card(CardInput card) {
+        this.mana = card.getMana();
+        this.description = card.getDescription();
+        this.colors = card.getColors();
+        this.name = card.getName();
+    }
+    public card(cardTable card) {
         this.mana = card.getMana();
         this.description = card.getDescription();
         this.colors = card.getColors();

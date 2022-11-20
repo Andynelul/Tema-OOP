@@ -1,6 +1,7 @@
 package Systems;
 
 import Player.*;
+import fileio.Coordinates;
 
 import java.util.ArrayList;
 
@@ -23,23 +24,74 @@ public class Commands {
         PlayerTurn plr = new PlayerTurn("getPlayerTurn", playerTurn);
         return plr;
     }
+
     public PlayerDeck getCardsInHand(int playerIdx, ArrayList <card> deck) {
 
         PlayerDeck plr1 = new PlayerDeck("getCardsInHand", playerIdx, deck);
 
         return plr1;
     }
-    public PlayerMana getPlayerMana(int playerIdx,int mana) {
-        PlayerMana plr = new PlayerMana("getPlayerMana", playerIdx,mana);
+
+    public PlayerMana getPlayerMana(int playerIdx, int mana) {
+        PlayerMana plr = new PlayerMana("getPlayerMana", playerIdx, mana);
         return plr;
     }
-    public TableDeck getCardsOnTable(Table table){
-        TableDeck plr=new TableDeck("getCardsOnTable", table);
+
+    public TableDeck getCardsOnTable(Table table) {
+        TableDeck plr = new TableDeck("getCardsOnTable", table);
         return plr;
     }
-    public Eroare getError(String command,int handIdx,String eroare)
-    {
-        Eroare err=new Eroare(command,handIdx,eroare);
+
+    public Eroare getError(String command, int handIdx, String eroare) {
+        Eroare err = new Eroare(command, handIdx, eroare);
         return err;
+    }
+
+    public CardPosition getCardAtPosition(int x, int y, cardTable card) {
+        CardPosition plr = new CardPosition("getCardAtPosition", x, y, card);
+        return plr;
+    }
+    public ErrorPosition getError(int x,int y)
+    {
+        ErrorPosition plr = new ErrorPosition( "getCardAtPosition",x,y,"No card available at that position.");
+        return plr;
+    }
+    public PlayerDeck getEnvironmentCardsInHand(int playerIdx,ArrayList<card> cards)
+    {
+      ArrayList<card> environmental=new ArrayList<>();
+      for(int i=0;i<cards.size();i++)
+      {
+          if(cards.get(i).getName().equals("Winterfell")||cards.get(i).getName().equals("Firestorm")||cards.get(i).getName().equals("Heart Hound"))
+          {
+              environmental.add(cards.get(i));
+          }
+      }
+        PlayerDeck plr= new PlayerDeck("getEnvironmentCardsInHand",playerIdx,environmental);
+    return plr;
+    }
+    public Environmenterror getEnvironmentError(String command,int handIdx,int affectedRow,String error)
+    {
+        Environmenterror plr=new Environmenterror("useEnvironmentCard", handIdx,affectedRow,error);
+        return plr;
+    }
+    public FrozenCards getFrozenCardsOnTable(Table table)
+    {
+        ArrayList<card> list =new ArrayList<card>();
+        for(int i=0;i<3;i++)
+            for(int j=0;j<table.getTable().get(i).size();j++)
+            {
+                if(table.getTable().get(i).get(j).getFrozen()==1)
+                {
+                    list.add(new card(table.getTable().get(i).get(j)));
+
+                }
+            }
+        FrozenCards plr=new FrozenCards("getFrozenCardsOnTable",list);
+                return plr;
+    }
+    public AttackError getAttackErrors(Coordinates Att,Coordinates Def,String error)
+    {
+        AttackError plr=new AttackError("cardUsesAttack",Att,Def,error);
+        return plr;
     }
 }
