@@ -17,7 +17,6 @@ public class ExecuteCommands {
         int randul1=0,randul2=0;
         int p1ChampAt=0,p2ChampAt=0;
         ObjectMapper objectMapper=new ObjectMapper() ;
-       // ArrayNode out=objectMapper.createArrayNode();
         for( ActionsInput action: game.getActions()) {
             String command = action.getCommand();
             Commands doCommand = new Commands();
@@ -56,8 +55,6 @@ public class ExecuteCommands {
                 }
                  if ( counter == 2 ) {
                     counter = 0;
-                    //  Round.next(p1,p2,round)
-
                     round++;
                     if ( round < 10 ) {
                         p1.setMana(round + p1.getMana());
@@ -268,10 +265,7 @@ public class ExecuteCommands {
                             if ( (3 - action.getAffectedRow()) == 2 || (3 - action.getAffectedRow()) == 3 ) {
                                 if ( chosencard.getName().equals("Firestorm") ) {
                                     for ( int i = 0; i < table.getTable().get(3 - action.getAffectedRow()).size(); i++ ) {
-                                        // System.out.println("Viatsa"+table.getTable().get(3-action.getAffectedRow()).get(i).getHealth());
                                         table.getTable().get(3 - action.getAffectedRow()).get(i).setHealth((table.getTable().get(3 - action.getAffectedRow()).get(i).getHealth()) - 1);
-                                        //    System.out.println("Viatsa dupapa"+table.getTable().get(3-action.getAffectedRow()).get(i).getHealth());
-
                                     }
                                     for ( int i = table.getTable().get(3 - action.getAffectedRow()).size() - 1; i >= 0; i-- ) {
                                         if ( table.getTable().get(3 - action.getAffectedRow()).get(i).getHealth() < 1 )
@@ -620,15 +614,6 @@ public class ExecuteCommands {
             {
                 out.add(objectMapper.valueToTree(doCommand.GetGames(Statistics.getGames())));
             }
-            }
-
-        //return out;
+        }
     }
 }
-
-//class Round{
-//    static public void next(player p1,player p2)
-//    {   round++;
-//
-//    }
-//}

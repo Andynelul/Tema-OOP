@@ -2,17 +2,14 @@ package Player;
 
 import fileio.Coordinates;
 
-public class AttackError {
-    private String command;
-    private Coordinates cardAttacker;
-    private Coordinates cardAttacked;
-    private String error;
+public class AttackHeroError {
+    String command;
+    Coordinates cardAttacker;
+    String error;
 
-    public AttackError(String command, Coordinates cardAttacker,
-                       Coordinates cardAttacked, String error) {
+    public AttackHeroError(String command, Coordinates cardAttacker, String error) {
         this.command = command;
         this.cardAttacker = cardAttacker;
-        this.cardAttacked = cardAttacked;
         this.error = error;
     }
 
@@ -30,14 +27,6 @@ public class AttackError {
 
     public void setCardAttacker(Coordinates cardAttacker) {
         this.cardAttacker = cardAttacker;
-    }
-
-    public Coordinates getCardAttacked() {
-        return cardAttacked;
-    }
-
-    public void setCardAttacked(Coordinates cardAttacked) {
-        this.cardAttacked = cardAttacked;
     }
 
     public String getError() {

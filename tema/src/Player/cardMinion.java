@@ -2,8 +2,6 @@ package Player;
 
 import fileio.CardInput;
 
-import java.util.ArrayList;
-
 public class cardMinion extends card{
     private int attackDamage;
     private int health;

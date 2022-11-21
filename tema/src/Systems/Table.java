@@ -11,10 +11,6 @@ public class Table {
     public Table(){
         for(int i=0;i<4;i++)
            table.add(new ArrayList <cardTable>(5));
-          // { for ( int j = 0; j < table.get(i).size(); j++ )
-   //             table.get(i).add(new card() );
- //  }
-        //}
     }
 
     public ArrayList <ArrayList <cardTable>> getTable() {

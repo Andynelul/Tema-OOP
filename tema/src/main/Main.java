@@ -1,7 +1,6 @@
 package main;
 
-import GwentStone.gwentStone;
-import Systems.ExecuteCommands;
+import gwentStone.StartGame;
 import Systems.Statistics;
 import checker.Checker;
 
@@ -9,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import checker.CheckerConstants;
-import fileio.GameInput;
 import fileio.Input;
 import java.io.File;
 import java.io.IOException;
@@ -73,8 +71,8 @@ public final class Main {
         ArrayNode output = objectMapper.createArrayNode();
 
         //TODO add here the entry point to your implementation
-        gwentStone game = new gwentStone();
-        output=game.start(inputData);
+        StartGame game = new StartGame();
+        output = game.start(inputData);
         Statistics.setPlayerTwoWins(0);
         Statistics.setPlayerOneWins(0);
         Statistics.setGames(0);
